@@ -12,12 +12,13 @@ const events_service_1 = require("./events.service");
 const events_controller_1 = require("./events.controller");
 const typeorm_module_1 = require("@nestjs/typeorm/dist/typeorm.module");
 const event_entity_1 = require("./entities/event.entity");
+const student_entity_1 = require("../students/entities/student.entity");
 let EventsModule = class EventsModule {
 };
 exports.EventsModule = EventsModule;
 exports.EventsModule = EventsModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_module_1.TypeOrmModule.forFeature([event_entity_1.Event])],
+        imports: [typeorm_module_1.TypeOrmModule.forFeature([event_entity_1.Event, student_entity_1.Student])],
         controllers: [events_controller_1.EventsController],
         providers: [events_service_1.EventsService],
     })

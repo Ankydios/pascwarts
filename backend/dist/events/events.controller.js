@@ -37,6 +37,15 @@ let EventsController = class EventsController {
     remove(id) {
         return this.eventsService.remove(+id);
     }
+    findByHouse(id) {
+        return this.eventsService.findByHouse(+id);
+    }
+    findByStudent(id) {
+        return this.eventsService.findByStudent(+id);
+    }
+    findBySchoolClass(id) {
+        return this.eventsService.findBySchoolClass(+id);
+    }
 };
 exports.EventsController = EventsController;
 __decorate([
@@ -74,6 +83,27 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EventsController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('house/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], EventsController.prototype, "findByHouse", null);
+__decorate([
+    (0, common_1.Get)('student/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], EventsController.prototype, "findByStudent", null);
+__decorate([
+    (0, common_1.Get)('school-class/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], EventsController.prototype, "findBySchoolClass", null);
 exports.EventsController = EventsController = __decorate([
     (0, common_1.Controller)('api/events'),
     __metadata("design:paramtypes", [events_service_1.EventsService])

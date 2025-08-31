@@ -6,6 +6,7 @@ class SchoolClassResponseDto {
     name;
     level;
     schoolYear;
+    points;
     createdAt;
     updatedAt;
 }

@@ -25,7 +25,9 @@ export class Event {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   eventDate: Date;
 
-  @ManyToOne(() => Student, (student) => student.events)
+  @ManyToOne(() => Student, (student) => student.events, {
+    onDelete: 'CASCADE',
+  })
   student: Student;
 
   @CreateDateColumn()

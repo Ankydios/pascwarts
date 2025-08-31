@@ -9,4 +9,7 @@ export declare class EventsController {
     findOne(id: string): Promise<import("./dto/event-response.dto").EventResponseDto>;
     update(id: string, updateEventDto: UpdateEventDto): Promise<import("./dto/event-response.dto").EventResponseDto>;
     remove(id: string): Promise<void>;
+    findByHouse(id: string): Promise<import("./dto/event-response.dto").EventResponseDto[]>;
+    findByStudent(id: string): Promise<import("./dto/event-response.dto").EventResponseDto[]>;
+    findBySchoolClass(id: string): Promise<import("./dto/event-response.dto").EventResponseDto[]>;
 }

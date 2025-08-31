@@ -44,7 +44,9 @@ __decorate([
     __metadata("design:type", Date)
 ], Event.prototype, "eventDate", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => student_entity_1.Student, (student) => student.events),
+    (0, typeorm_1.ManyToOne)(() => student_entity_1.Student, (student) => student.events, {
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", student_entity_1.Student)
 ], Event.prototype, "student", void 0);
 __decorate([

@@ -39,4 +39,19 @@ export class EventsController {
   remove(@Param('id') id: string) {
     return this.eventsService.remove(+id);
   }
+
+  @Get('house/:id')
+  findByHouse(@Param('id') id: string) {
+    return this.eventsService.findByHouse(+id);
+  }
+
+  @Get('student/:id')
+  findByStudent(@Param('id') id: string) {
+    return this.eventsService.findByStudent(+id);
+  }
+
+  @Get('school-class/:id')
+  findBySchoolClass(@Param('id') id: string) {
+    return this.eventsService.findBySchoolClass(+id);
+  }
 }
