@@ -1,1 +1,1 @@
-{"version":3,"file":"house-response.dto.js","sourceRoot":"","sources":["../../../src/houses/dto/house-response.dto.ts"],"names":[],"mappings":";;;AAAA,MAAa,gBAAgB;IAC3B,EAAE,CAAS;IACX,IAAI,CAAS;IACb,SAAS,CAAO;IAChB,SAAS,CAAO;CACjB;AALD,4CAKC"}
+{"version":3,"file":"house-response.dto.js","sourceRoot":"","sources":["../../../src/houses/dto/house-response.dto.ts"],"names":[],"mappings":";;;AAAA,MAAa,gBAAgB;IAC3B,EAAE,CAAS;IACX,IAAI,CAAS;IACb,SAAS,CAAO;IAChB,SAAS,CAAO;IAChB,MAAM,CAAS;CAChB;AAND,4CAMC"}

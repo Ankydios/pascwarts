@@ -26,7 +26,9 @@ export class SchoolClassesService {
       relations: ['students'],
       order: { name: 'ASC' },
     });
-    return schoolClasses.map((schoolClass) => this.toResponseDto(schoolClass));
+    return Promise.all(
+      schoolClasses.map((schoolClass) => this.toResponseDto(schoolClass)),
+    );
   }
 
   async findOne(id: number): Promise<SchoolClassResponseDto> {
@@ -57,12 +59,27 @@ export class SchoolClassesService {
     }
   }
 
-  private toResponseDto(schoolClass: SchoolClass): SchoolClassResponseDto {
+  async getSchoolClassPoints(schoolClassId: number): Promise<number> {
+    const result = await this.schoolClassesRepository
+      .createQueryBuilder('schoolClass')
+      .leftJoin('schoolClass.students', 'student')
+      .leftJoin('student.events', 'event')
+      .where('schoolClass.id = :schoolClassId', { schoolClassId })
+      .select('COALESCE(SUM(event.points), 0)', 'totalPoints')
+      .getRawOne();
+
+    return Number(result.totalPoints);
+  }
+
+  private async toResponseDto(
+    schoolClass: SchoolClass,
+  ): Promise<SchoolClassResponseDto> {
     return {
       id: schoolClass.id,
       name: schoolClass.name,
       level: schoolClass.level,
       schoolYear: schoolClass.schoolYear,
+      points: await this.getSchoolClassPoints(schoolClass.id),
       createdAt: schoolClass.createdAt,
       updatedAt: schoolClass.updatedAt,
     };

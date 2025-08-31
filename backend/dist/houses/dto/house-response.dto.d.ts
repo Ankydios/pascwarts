@@ -3,4 +3,5 @@ export declare class HouseResponseDto {
     name: string;
     createdAt: Date;
     updatedAt: Date;
+    points: number;
 }

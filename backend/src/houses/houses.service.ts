@@ -19,11 +19,12 @@ export class HousesService {
     return this.toResponseDto(house);
   }
 
-  async findAll(): Promise<House[]> {
-    return await this.housesRepository.find({
+  async findAll(): Promise<HouseResponseDto[]> {
+    const houses = await this.housesRepository.find({
       relations: ['students'],
       order: { name: 'ASC' },
     });
+    return Promise.all(houses.map((house) => this.toResponseDto(house)));
   }
 
   async findOne(id: number): Promise<HouseResponseDto> {
@@ -54,12 +55,25 @@ export class HousesService {
     }
   }
 
-  private toResponseDto(house: House): HouseResponseDto {
+  async getPointsOfHouse(houseId: number): Promise<number> {
+    const result = await this.housesRepository
+      .createQueryBuilder('house')
+      .leftJoin('house.students', 'student')
+      .leftJoin('student.events', 'event')
+      .where('house.id = :houseId', { houseId })
+      .select('COALESCE(SUM(event.points), 0)', 'totalPoints')
+      .getRawOne();
+
+    return Number(result.totalPoints);
+  }
+
+  private async toResponseDto(house: House): Promise<HouseResponseDto> {
     return {
       id: house.id,
       name: house.name,
       createdAt: house.createdAt,
       updatedAt: house.updatedAt,
+      points: await this.getPointsOfHouse(house.id),
     };
   }
 }

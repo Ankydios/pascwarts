@@ -11,5 +11,6 @@ export declare class SchoolClassesService {
     findOne(id: number): Promise<SchoolClassResponseDto>;
     update(id: number, updateSchoolClassDto: UpdateSchoolClassDto): Promise<SchoolClassResponseDto>;
     remove(id: number): Promise<void>;
+    getSchoolClassPoints(schoolClassId: number): Promise<number>;
     private toResponseDto;
 }

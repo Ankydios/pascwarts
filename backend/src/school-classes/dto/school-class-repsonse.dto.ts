@@ -3,6 +3,7 @@ export class SchoolClassResponseDto {
   name: string;
   level: string;
   schoolYear: string;
+  points: number;
   createdAt: Date;
   updatedAt: Date;
 }

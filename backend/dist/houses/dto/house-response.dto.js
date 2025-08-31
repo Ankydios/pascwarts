@@ -6,6 +6,7 @@ class HouseResponseDto {
     name;
     createdAt;
     updatedAt;
+    points;
 }
 exports.HouseResponseDto = HouseResponseDto;
 //# sourceMappingURL=house-response.dto.js.map

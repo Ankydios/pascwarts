@@ -46,7 +46,10 @@ __decorate([
     __metadata("design:type", house_entity_1.House)
 ], Student.prototype, "house", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => event_entity_1.Event, (event) => event.student),
+    (0, typeorm_1.OneToMany)(() => event_entity_1.Event, (event) => event.student, {
+        cascade: ['remove'],
+        onDelete: 'CASCADE',
+    }),
     __metadata("design:type", Array)
 ], Student.prototype, "events", void 0);
 __decorate([

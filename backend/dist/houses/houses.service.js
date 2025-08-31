@@ -28,10 +28,11 @@ let HousesService = class HousesService {
         return this.toResponseDto(house);
     }
     async findAll() {
-        return await this.housesRepository.find({
+        const houses = await this.housesRepository.find({
             relations: ['students'],
             order: { name: 'ASC' },
         });
+        return Promise.all(houses.map((house) => this.toResponseDto(house)));
     }
     async findOne(id) {
         const house = await this.housesRepository.findOne({
@@ -53,12 +54,23 @@ let HousesService = class HousesService {
             throw new common_1.NotFoundException(`Maison avec l'ID ${id} non trouvée`);
         }
     }
-    toResponseDto(house) {
+    async getPointsOfHouse(houseId) {
+        const result = await this.housesRepository
+            .createQueryBuilder('house')
+            .leftJoin('house.students', 'student')
+            .leftJoin('student.events', 'event')
+            .where('house.id = :houseId', { houseId })
+            .select('COALESCE(SUM(event.points), 0)', 'totalPoints')
+            .getRawOne();
+        return Number(result.totalPoints);
+    }
+    async toResponseDto(house) {
         return {
             id: house.id,
             name: house.name,
             createdAt: house.createdAt,
             updatedAt: house.updatedAt,
+            points: await this.getPointsOfHouse(house.id),
         };
     }
 };

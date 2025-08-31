@@ -32,7 +32,7 @@ let SchoolClassesService = class SchoolClassesService {
             relations: ['students'],
             order: { name: 'ASC' },
         });
-        return schoolClasses.map((schoolClass) => this.toResponseDto(schoolClass));
+        return Promise.all(schoolClasses.map((schoolClass) => this.toResponseDto(schoolClass)));
     }
     async findOne(id) {
         const schoolClass = await this.schoolClassesRepository.findOne({
@@ -54,12 +54,23 @@ let SchoolClassesService = class SchoolClassesService {
             throw new common_1.NotFoundException(`Maison avec l'ID ${id} non trouvée`);
         }
     }
-    toResponseDto(schoolClass) {
+    async getSchoolClassPoints(schoolClassId) {
+        const result = await this.schoolClassesRepository
+            .createQueryBuilder('schoolClass')
+            .leftJoin('schoolClass.students', 'student')
+            .leftJoin('student.events', 'event')
+            .where('schoolClass.id = :schoolClassId', { schoolClassId })
+            .select('COALESCE(SUM(event.points), 0)', 'totalPoints')
+            .getRawOne();
+        return Number(result.totalPoints);
+    }
+    async toResponseDto(schoolClass) {
         return {
             id: schoolClass.id,
             name: schoolClass.name,
             level: schoolClass.level,
             schoolYear: schoolClass.schoolYear,
+            points: await this.getSchoolClassPoints(schoolClass.id),
             createdAt: schoolClass.createdAt,
             updatedAt: schoolClass.updatedAt,
         };

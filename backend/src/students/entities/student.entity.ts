@@ -29,7 +29,10 @@ export class Student {
   @ManyToOne(() => House, (house) => house.students)
   house: House;
 
-  @OneToMany(() => Event, (event) => event.student)
+  @OneToMany(() => Event, (event) => event.student, {
+    cascade: ['remove'],
+    onDelete: 'CASCADE',
+  })
   events: Event[];
 
   @CreateDateColumn()
